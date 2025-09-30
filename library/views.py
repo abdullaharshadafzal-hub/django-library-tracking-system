@@ -7,7 +7,7 @@ from django.utils import timezone
 from .tasks import send_loan_notification
 from datetime import timedelta
 from rest_framework.pagination import PageNumberPagination
-from django.db.models import Count
+from django.db.models import Count, Q
 
 class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
@@ -67,7 +67,7 @@ class MemberViewSet(viewsets.ModelViewSet):
         data = [
             {
                 'id': member.id,
-                'username': member.username,
+                'username': member.user.username,
                 'active_loans': member.active_loans
             }
             for member in top_members
