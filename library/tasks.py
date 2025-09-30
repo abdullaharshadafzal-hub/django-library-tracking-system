@@ -30,9 +30,9 @@ def check_overdue_loans():
     for loan in overdue_loans:
         send_mail(
             subject='Overdue Book Reminder',
-            message=f'Dear {loan.member.username}, your loan for "{loan.book.title}" is overdue.',
+            message=f'Dear {loan.member.user.username}, your loan for "{loan.book.title}" is overdue.',
             from_email='library@example.com',
-            recipient_list=[loan.member.email],
+            recipient_list=[loan.member.user.email],
             fail_silently=False,
         )
     
