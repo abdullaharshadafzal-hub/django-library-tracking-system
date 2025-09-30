@@ -102,7 +102,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'check-overdue-loans-daily': {
+        'task': 'library.tasks.check_overdue_loans',
+        'schedule': crontab(hour=9, minute=0),  # Run daily at 9 AM
+    },
 }
 
 # Celery Configuration
